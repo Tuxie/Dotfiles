@@ -29,10 +29,6 @@ require 'socket'
 HOSTNAME = Socket.gethostbyname(Socket.gethostname).first
 
 case HOSTNAME
-  when /\.snowmen\.se$/
-    def sc
-      ServiceClient.new
-    end
+  when /\.snowmen\.se$/ then load "#{ENV['HOME']}/.irbrc.work"
 end
-
 
