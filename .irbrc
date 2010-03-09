@@ -11,9 +11,12 @@ begin
   Wirble.init
   Wirble.colorize
 rescue LoadError
+  puts "Tip: install the wirble gem for some colours!"
   require 'irb/completion'
   require 'irb/ext/save-history'
 end
+IRB.conf[:SAVE_HISTORY] = 500
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
 IRB.conf[:PROMPT][:CUSTOM] = {
     :PROMPT_I => "IRB> ",
@@ -23,7 +26,6 @@ IRB.conf[:PROMPT][:CUSTOM] = {
     :RETURN => "%s\n"
 }
 IRB.conf[:PROMPT_MODE] = :CUSTOM
-
 
 require 'socket'
 HOSTNAME = Socket.gethostbyname(Socket.gethostname).first
