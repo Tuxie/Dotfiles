@@ -1,3 +1,4 @@
+# Load some default modules
 ['rubygems','json','time','date','pp'].each do |mod|
   begin
     require mod
@@ -6,6 +7,7 @@
   end
 end
 
+# Configure colours and history
 begin
   require 'wirble'
   Wirble.init
@@ -18,6 +20,7 @@ end
 IRB.conf[:SAVE_HISTORY] = 500
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
+# Make the prompt nice
 IRB.conf[:PROMPT][:CUSTOM] = {
     :PROMPT_I => "IRB> ",
     :PROMPT_C => "   > ",
@@ -27,10 +30,9 @@ IRB.conf[:PROMPT][:CUSTOM] = {
 }
 IRB.conf[:PROMPT_MODE] = :CUSTOM
 
+# Computer-specific stuff
 require 'socket'
-HOSTNAME = Socket.gethostbyname(Socket.gethostname).first
-
-case HOSTNAME
+case Socket.gethostbyname(Socket.gethostname).first
   when /\.snowmen\.se$/ then load "#{ENV['HOME']}/.irbrc.work"
 end
 
