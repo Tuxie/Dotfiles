@@ -1,0 +1,10 @@
+export CFLAGS="-O2 -march=nocona -pipe"
+
+alias ls="ls -G"
+alias ll="ls -lG"
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias mplayer='/Applications/MPlayer\ OSX\ Extended.app/Contents/Resources/External_Binaries/mplayer.app/Contents/MacOS/mplayer'
+alias dosbox='/Applications/DOSBox.app/Contents/MacOS/DOSBox'
+
+test -f /sw/bin/init.sh && . /sw/bin/init.sh
+

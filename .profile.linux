@@ -1,0 +1,5 @@
+export CFLAGS="-O2 -march=x86_64 -pipe"
+
+alias ls="ls --color"
+alias ll="ls -l --color"
+
