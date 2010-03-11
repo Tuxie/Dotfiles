@@ -16,3 +16,5 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+uptime
+
