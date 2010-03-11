@@ -29,6 +29,7 @@ setopt promptsubst
 
 case "$(ifconfig en0 | grep ether)" in
   *00:17:f2:d8:ca:4a*)  PRETTY_HOSTNAME="MacBook Pro" ;;
+  *00:24:1d:15:bf:b1*)  PRETTY_HOSTNAME="Desktop"     ;;
   *)                    PRETTY_HOSTNAME="$(hostname)" ;;
 esac
 
