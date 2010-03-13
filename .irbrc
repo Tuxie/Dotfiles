@@ -3,6 +3,7 @@
   begin
     require mod
   rescue LoadError
+    puts "Error loading #{mod}"
     next
   end
 end
@@ -36,3 +37,6 @@ case Socket.gethostbyname(Socket.gethostname).first
   when /\.snowmen\.se$/ then load "#{ENV['HOME']}/.irbrc.work"
 end
 
+class Object
+  undef_method :id
+end
