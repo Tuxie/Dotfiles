@@ -1,1 +1,1 @@
-gem: --remote --no-rdoc
+gem: --remote --no-rdoc --verbose
