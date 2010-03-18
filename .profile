@@ -36,7 +36,7 @@ case "$(hostname)" in
   *.snowmen.se) . $HOME/.profile.work ;;
 esac
 
-export RUBY_MAJOR_VERSION=$(ruby --version 2>&1 | sed -r 's:^ruby ([0-9]+\.[0-9]+).*:\1:g')
+export RUBY_MAJOR_VERSION=$(ruby --version 2>&1 | esed -r 's:^ruby ([0-9]+\.[0-9]+).*:\1:g')
 export GEM_HOME=$HOME/.gem/ruby/$RUBY_MAJOR_VERSION
 export PATH=$GEM_HOME/bin:$PATH
 
