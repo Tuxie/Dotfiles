@@ -37,6 +37,10 @@ case Socket.gethostbyname(Socket.gethostname).first
   when /\.snowmen\.se$/ then load "#{ENV['HOME']}/.irbrc.work"
 end
 
-class Object
-  undef_method :id
+if RUBY_VERSION =~ /^1\.8/
+
+  class Object
+    undef_method :id
+  end
+
 end

@@ -40,3 +40,6 @@ export RUBY_MAJOR_VERSION=$(ruby --version 2>&1 | esed 's:^ruby ([0-9]+\.[0-9]+)
 export GEM_HOME=$HOME/.gem/ruby/$RUBY_MAJOR_VERSION
 export PATH=$GEM_HOME/bin:$PATH
 
+if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
+
+which rvm &>/dev/null && rvm use 1.9.1
