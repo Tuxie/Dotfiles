@@ -1,3 +1,0 @@
-def sc
-  ServiceClient.new
-end

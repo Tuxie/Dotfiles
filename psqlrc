@@ -1,0 +1,16 @@
+\set QUIET 1
+
+\x off
+\timing on
+\pset linestyle unicode
+\pset border 1
+\pset null '␀'
+\set VERBOSITY verbose
+\set HISTCONTROL ignoredups
+-- \set AUTOCOMMIT off
+
+-- \set less '\\setenv PAGER less'
+-- \set pspg '\\setenv PAGER \'pspg -s 5 -X --no-mouse --no-sound --quit-if-one-screen\''
+-- :pspg
+
+\set QUIET 0

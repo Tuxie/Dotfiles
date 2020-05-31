@@ -1,7 +1,0 @@
-set antialias
-set guifont=Monaco:h12
-set lines=40 columns=132
-set guioptions-=r   " Disable the scrollbar
-set guioptions-=T   " Disable the toolbar
-set fuoptions=maxvert,maxhorz  " Full fullscreen
-

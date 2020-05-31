@@ -1,0 +1,14 @@
+alias ls="ls -H --color=tty"
+
+if test -d /snap/bin
+then
+    export PATH="/snap/bin:$PATH"
+fi
+
+if test -d /home/linuxbrew/.linuxbrew/bin
+then
+    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+    export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
+    export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
+fi
+

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+export LC_ALL=en_US.utf8
+unset LC_CTYPE LANG
+
+exec ssh -tt $1 -- screen -xRRU

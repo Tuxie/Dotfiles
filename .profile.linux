@@ -1,5 +1,0 @@
-export CFLAGS="-O2 -march=native -pipe"
-
-alias ls="ls --color"
-alias ll="ls -l --color"
-
