@@ -49,9 +49,9 @@ done
 if (( ${#missing[@]} )); then
     print "Some packages are missing. Install them:"
     if (( $+commands[pacman] )); then
-        print "  pacman -Sy ${(ou)missing[@]}"
+        print "  sudo pacman -Sy ${(ou)missing[@]}"
     elif (( $+commands[apt-get] )); then
-        print "  apt install ${(ou)missing[@]}"
+        print "  sudo apt install ${(ou)missing[@]}"
     elif (( $+commands[brew] )); then
         print "  brew install ${(ou)missing[@]}"
     else
