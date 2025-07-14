@@ -1,0 +1,21 @@
+"call plug#begin('~/.config/vim/plugged')
+
+" Sensible defaults
+"Plug 'tpope/vim-sensible'
+
+"call plug#end()
+
+set nocompatible
+set ruler
+set wildmenu
+set laststatus=2
+
+
+set tabstop=4       " Number of spaces that a <Tab> counts for
+set shiftwidth=4    " Number of spaces to use for each step of (auto)indent
+set expandtab       " Use spaces instead of actual tab characters
+
+" Set colorscheme and make background transparent
+syntax enable
+colorscheme habamax
+hi! Normal ctermbg=NONE guibg=NONE

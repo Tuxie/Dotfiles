@@ -1,7 +1,0 @@
-# sourced in WSL2
-
-# Disable permissions warning when Dropbox is on /mnt/c
-export ZSH_DISABLE_COMPFIX=true
-
-export HOST=windows
-cd ~

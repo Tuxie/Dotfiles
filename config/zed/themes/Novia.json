@@ -1,0 +1,185 @@
+{
+  "$schema": "https://zed.dev/schema/themes/v0.2.0.json",
+  "name": "Novia",
+  "author": "Per Wigren",
+  "themes": [
+    {
+      "name": "Novia Twilight",
+      "appearance": "dark",
+      "style": {
+        // Blues
+        "title_bar.background": "#5a6a92",
+        "status_bar.background": "#5a6a92",
+        "toolbar.background": "#5a6a92",
+        "tab.active_background": "#5a6a92",
+        "border.variant": "#5a6a92",
+        //        "border.focused": "#f00",
+        "pane_group.border": "#5a6a92",
+
+        // Medium grey
+        //"editor.gutter.background": "#5a6a92",
+        //"editor.gutter.background": "#959595",
+        "editor.gutter.background": "#808080",
+
+        // Light grey
+        "panel.background": "#959595",
+        "border": "#959595",
+        "tab_bar.background": "#959595",
+        "tab.inactive_background": "#959595",
+
+        "editor.background": "#222222",
+        "editor.line_number": "#282828",
+        "editor.active_line_number": "#5a6a92",
+        "editor.indent_guide": "#181818",
+        "editor.indent_guide_active": "#303030",
+        "editor.active_line.background": "#333",
+        "panel.indent_guide": "#808080",
+        "panel.indent_guide_active": "#333",
+        "modified": "#e0e088",
+        "created": "#a8e8a8",
+        "deleted": "#e8a8a8",
+        "renamed": "#ffe8e8",
+        "conflict": "#f44",
+        "text.muted": "#000",
+        "text": "#ddd",
+
+        "scrollbar.track.border": "#808080",
+        "scrollbar.track.background": "#808080",
+        "scrollbar.thumb.background": "#5a6a92",
+        "scrollbar.thumb.active_background": "#4a5a82",
+        "scrollbar.thumb.hover_background": "#5a6a92",
+
+        "element.selected": "#5a6a92",
+        "panel.focused_border": "#5a6a92",
+        "minimap.thumb.hover_background": "#6663",
+        "minimap.thumb.active_background": "#6664",
+        "minimap.thumb.background": "#6662",
+        "minimap.thumb.border": "#111",
+        "warning.background": "#771",
+        "warning.border": "#330",
+        "error.background": "#722",
+        "error.border": "#500",
+        "hint": "#484848", // inline git blame
+        "editor.foreground": "#bbb",
+        "editor.wrap_guide": "#222",
+        "editor.active_wrap_guide": "#333",
+        "warning": "#ff0",
+        "editor.document_highlight.bracket_background": "#385038", // Bracket highlighting color
+        "predictive": "#5D5945",
+        "cursor": "#f00",
+        "predictive.background": "#222",
+        "syntax": {
+          "variable": { "color": "#7587A6" },
+          "punctuation": { "color": "#9ac" },
+          "keyword": { "color": "#CDA869" },
+          "function": { "color": "#9B6F3E" },
+          "string": { "color": "#8F9D6A" },
+          "string.special.symbol": { "color": "#E6DB74" },
+          "string.special": { "color": "#E6DB74" },
+          "operator": { "color": "#7587A6" },
+          "property": { "color": "#7587A6" },
+          "type": { "color": "#DAD085" },
+          "title": { "color": "#7587A6" },
+          "constructor": { "color": "#9B859D" },
+          "comment": { "color": "#787c80" },
+          "suggestion": { "color": "#787c80" },
+          "predictive": { "color": "#787c80" },
+          "variant": { "color": "#787c80" },
+          "constant": { "color": "#CF6A4C" },
+          "number": { "color": "#CF6A4C" },
+          "tag": { "color": "#f0be6e", "font_style": "italic" }
+        }
+      }
+    },
+    {
+      "name": "Novia Magic Light",
+      "appearance": "light",
+      "style": {
+        // Blues
+        "title_bar.background": "#68b",
+        "status_bar.background": "#68b",
+        "tab.active_background": "#68b",
+        "toolbar.background": "#999",
+        "border.variant": "#999",
+        "pane_group.border": "#68b",
+
+        // Medium grey
+        //"editor.gutter.background": "#5a6a92",
+        //"editor.gutter.background": "#959595",
+        "editor.gutter.background": "#999",
+
+        // Light grey
+        "panel.background": "#aaa",
+        //"border": "#68b",
+        "border": "#aaa",
+        "tab_bar.background": "#68b",
+        "tab.inactive_background": "#aaa",
+
+        "editor.background": "#aaa",
+        "editor.line_number": "#282828",
+        "editor.active_line_number": "#5a6a92",
+        "editor.indent_guide": "#888888",
+        "editor.indent_guide_active": "#666",
+        "editor.active_line.background": "#999",
+        "panel.indent_guide": "#808080",
+        "panel.indent_guide_active": "#333",
+        "modified": "#e0e088",
+        "created": "#a8e8a8",
+        "deleted": "#e8a8a8",
+        "renamed": "#ffe8e8",
+        "conflict": "#f44",
+        "text.muted": "#000",
+        "text": "#ddd",
+
+        "scrollbar.track.background": "#999",
+        "scrollbar.thumb.background": "#68b",
+        "scrollbar.thumb.active_background": "#4a5a82",
+        "scrollbar.thumb.hover_background": "#5a6a92",
+        "border.transparent": "#f00",
+        "scrollbar.track.border": "#bbb",
+        "scrollbar.thumb.border": "#bbb",
+
+        "element.selected": "#5a6a92",
+        "pane.focused_border": "#5a6a92",
+        "minimap.thumb.hover_background": "#6663",
+        "minimap.thumb.active_background": "#6664",
+        "minimap.thumb.background": "#6662",
+        "minimap.thumb.border": "#111",
+        "warning.background": "#771",
+        "warning.border": "#330",
+        "error.background": "#722",
+        "editor.foreground": "#000",
+        //        "error.border": "#500",
+        "hint": "#484848", // inline git blame
+        "editor.wrap_guide": "#222",
+        "editor.active_wrap_guide": "#333",
+        //        "warning": "#ff0",
+        "editor.document_highlight.bracket_background": "#385038", // Bracket highlighting color
+        //        "predictive": "#5D5945",
+        //        "cursor": "#f00",
+        //        "predictive.background": "#222",
+        "syntax": {
+          //        "variable": { "color": "#7587A6" },
+          //        "punctuation": { "color": "#9ac" },
+          //        "keyword": { "color": "#CDA869" },
+          //        "function": { "color": "#9B6F3E" },
+          //        "string": { "color": "#8F9D6A" },
+          //        "string.special.symbol": { "color": "#E6DB74" },
+          //        "string.special": { "color": "#E6DB74" },
+          //        "operator": { "color": "#7587A6" },
+          "property": { "color": "#465272" }
+          //        "type": { "color": "#DAD085" },
+          //        "title": { "color": "#7587A6" },
+          //        "constructor": { "color": "#9B859D" },
+          //        "comment": { "color": "#787c80" },
+          //        "suggestion": { "color": "#787c80" },
+          //        "predictive": { "color": "#787c80" },
+          //        "variant": { "color": "#787c80" },
+          //        "constant": { "color": "#CF6A4C" },
+          //        "number": { "color": "#CF6A4C" },
+          //        "tag": { "color": "#f0be6e", "font_style": "italic" }
+        }
+      }
+    }
+  ]
+}

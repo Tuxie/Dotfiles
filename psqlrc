@@ -1,10 +1,11 @@
 \set QUIET 1
 
-\x off
+\x auto
 \timing on
 \pset linestyle unicode
 \pset border 1
-\pset null '␀'
+-- \pset null '␀'
+\pset null '𝙽𝚄𝙻𝙻'
 \set VERBOSITY verbose
 \set HISTCONTROL ignoredups
 -- \set AUTOCOMMIT off
