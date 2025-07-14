@@ -1,12 +1,16 @@
 #!/usr/bin/env zsh
 
+autoload -Uz is-at-least
+if ! is-at-least 5.9; then
+    print "Only ZSH v5.9 and newer is supported! You have v${ZSH_VERSION}"
+    print "Exiting."
+    exit 1
+fi
+
 # The full path to the directory containing this file, symlinks expanded
 export DOTFILES="${${(%):-%N}:A:h}"
 
-cd "$DOTFILES"
-git submodule update --init --remote --merge --recursive
-cd ~
-
+# Paths to look for stuff during the installation
 path=(
     $HOME/bin
     $HOME/.local/bin
@@ -60,6 +64,11 @@ if (( ${#missing[@]} )); then
     exit 1
 fi
 
+# Fetch or update the zsh addons
+cd "$DOTFILES"
+git submodule update --init --remote --merge --recursive
+cd ~
+
 _mkzshenv() {
     print "# This file will be overwritten!"
     print "# Make additions to ~/.zshenv.local instead."
@@ -105,15 +114,28 @@ configs=(
 
 for file in "${configs[@]}"
 do
-    if [[ -d $HOME/$file ]]; then
-        files=($HOME/$file/*(N))
+    source="${DOTFILES}/${file#.}"
+    target="${HOME}/${file}"
+    if [[ -d $target ]]; then
+        files=($target/*(N))
         if (( $#files == 0 )); then
-            print "Removing empty directory $HOME/$file"
-            rmdir "$HOME/$file"
+            print "Removing empty directory ~/$file"
+            rmdir "$target"
         fi
     fi
-    if [[ ! -e $HOME/$file ]]; then
-        print "Linking $HOME/$file"
-        ln -sf "$DOTFILES/${file#.}" "$HOME/$file"
+    if [[ -e $target && ! -L $target ]]; then
+        print "~/$file already exists and is not a symlink. Skipping."
+    elif [[ $source -ef $target ]]; then
+        # $target is already a link to $source. Skipping silently.
+    else
+        if [[ -L $target && ! $source -ef $target ]]; then
+            print "~/$file is already linked to something else. Skipping."
+            continue
+        else
+            print "Removing stale ~/$file symlink"
+            rm "$target"
+        fi
+        print "Linking ~/$file"
+        ln -sf "$source" "$target"
     fi
 done
