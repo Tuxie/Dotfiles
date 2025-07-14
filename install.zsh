@@ -22,7 +22,6 @@ recommended=(
     git
     fzf
     tmux
-    brew
     jq
     rg:ripgrep
     ruby
@@ -34,14 +33,10 @@ recommended=(
 )
 
 if [[ $OSTYPE == darwin* ]]; then
-    # Use GNU ls, because it is has configurable colors
-    recommended+=(gls:coreutils)
-fi
-
-if (( $+commands[pacman] )); then
-    # Don't recommend brew on Arch Linux because it already has recent enough
-    # versions of most things.
-    recommended=(${recommended:#brew})
+    if (( ! $+commands[brew] )); then
+        print "Homebrew is required on macOS! Please install it: https://brew.sh"
+        exit 1
+    fi
 fi
 
 missing=()
@@ -52,11 +47,17 @@ do
     fi
 done
 if (( ${#missing[@]} )); then
-    if (( ${missing[(I)brew]} )); then
-        print "Please install Homebrew! https://brew.sh"
+    print "Some packages are missing. Install them:"
+    if (( $+commands[pacman] )); then
+        print "  pacman -Sy ${(ou)missing[@]}"
+    elif (( $+commands[apt-get] )); then
+        print "  apt install ${(ou)missing[@]}"
+    elif (( $+commands[brew] )); then
+        print "  brew install ${(ou)missing[@]}"
+    else
+        print "  ${(ou)missing[@]}"
     fi
-    print "Some packages are missing. Install them with:"
-    print "  brew install ${(ou)missing[@]:#brew}"
+    exit 1
 fi
 
 _mkzshenv() {
