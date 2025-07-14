@@ -2,10 +2,14 @@
 
 # The full path to the directory containing this file, symlinks expanded
 export DOTFILES="${${(%):-%N}:A:h}"
+
+cd "$DOTFILES"
+git submodule update --init --remote --merge --recursive
 cd ~
 
 path=(
     $HOME/bin
+    $HOME/.local/bin
     /opt/homebrew/bin
     /opt/homebrew/opt/ruby/bin
     /home/linuxbrew/.linuxbrew/bin
