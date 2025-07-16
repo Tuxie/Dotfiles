@@ -10,10 +10,16 @@ return {
   opts = {
     -- change colorscheme
     colorscheme = "cosec-twilight",
+    -- colorscheme = "colorscheme",
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {
       init = { -- this table overrides highlights in all themes
-        -- Normal = { bg = "#000000" },
+        FloatBorder = { fg = "#998866" },
+        MasonBorder = { fg = "#998866" },
+        WinBar = { bg = "#282623", fg = "#EEE0BB" },
+        WinBarNC = { bg = "#141310", fg = "#888366" },
+        WinSeparator = { fg = "#554433" },
+        StatusLine = { fg = "#BBAA88" },
       },
       astrodark = { -- a table of overrides/changes when applying the astrotheme theme
         -- Normal = { bg = "#000000" },

@@ -6,7 +6,7 @@
   "vim_mode": true,
 
   "icon_theme": "Puppet Icons",
-  "theme": "Wigren Dark",
+  "theme": "Catppuccin Mocha (Blur)",
   "ui_font_size": 14.5,
 
   //"buffer_font_family": "CommitMono Nerd Font",
@@ -48,7 +48,7 @@
       "**/inventories/*staging",
       "**/inventories/*next"
     ],
-    "Shell Script": ["**.sh.j2", "**.zsh.j2", "**.bash.j2"],
+    "Shell Script": ["**.sh.j2", "**.zsh.j2", "**.bash.j2", "tmux.conf*"],
     "TOML": ["postgresql.conf"],
     "Jinja2": ["pg_*.conf"]
   },
@@ -65,5 +65,5 @@
     "enabled_in_text_threads": false
   },
 
-  "wrap_guides": [80, 100, 120]
+  "wrap_guides": [80]
 }

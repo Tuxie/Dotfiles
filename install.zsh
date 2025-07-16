@@ -34,6 +34,7 @@ recommended=(
     bat
     nvim:neovim
     grc
+    pspg
 )
 
 if [[ $OSTYPE == darwin* ]]; then
@@ -54,10 +55,12 @@ if (( ${#missing[@]} )); then
     print "Some packages are missing. Install them:"
     if (( $+commands[pacman] )); then
         print "  sudo pacman -Sy ${(ou)missing[@]}"
-    elif (( $+commands[apt-get] )); then
-        print "  sudo apt install ${(ou)missing[@]}"
     elif (( $+commands[brew] )); then
         print "  brew install ${(ou)missing[@]}"
+    elif (( $+commands[apt-get] )); then
+        print "  sudo apt install ${(ou)missing[@]}"
+    elif (( $+commands[dnf] )); then
+        print "  sudo dnf install ${(ou)missing[@]}"
     else
         print "  ${(ou)missing[@]}"
     fi

@@ -1,17 +1,14 @@
 \set QUIET 1
 
-\x auto
+\x off
 \timing on
 \pset linestyle unicode
 \pset border 1
--- \pset null '␀'
 \pset null '𝙽𝚄𝙻𝙻'
 \set VERBOSITY verbose
 \set HISTCONTROL ignoredups
 -- \set AUTOCOMMIT off
 
--- \set less '\\setenv PAGER less'
--- \set pspg '\\setenv PAGER \'pspg -s 5 -X --no-mouse --no-sound --quit-if-one-screen\''
--- :pspg
+\setenv PSQL_PAGER 'pspg --style=6 --no-bars --no-scrollbar --freezecols=0 --no-mouse --no-sound --force-uniborder --quit-if-one-screen'
 
 \set QUIET 0
