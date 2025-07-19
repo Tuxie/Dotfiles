@@ -1,0 +1,90 @@
+#!/bin/sh
+#
+# A little helper to enter your remote tmux zsh sessions.
+#
+# Use it like this when connecting to the server:
+#   ssh hostname -t mux            # Attach to the 'main' session
+#   ssh hostname -t mux devstuff   # Attach to the 'devstuff' session
+#
+# If you are using my dotfiles, prefix is set to Ctrl-s, as in SSH or Server.
+# Ctrl-s Ctrl-a to select session.
+# Ctrl-s Shift-A to add a new session and give it a name.
+# Ctrl-s Ctrl-s to send a literal Ctrl-s.
+# Ctrl-s d to detach/disconnect.
+# See tmux.conf and the tmux documentation for more commands.
+#
+# Make sure that your remote user's default shell can find this mux script
+# in its default $PATH. You may need to edit ~/.bashrc or whatever it uses
+# to add `export PATH="$HOME/bin:$PATH`.
+#
+# In some edge cases where the remote system's start scripts bounce you into
+# a subshell or a container you may need to use -tt instead of -t.
+#
+# You may also want to ignore the system's /etc/tmux.conf. In that case, put
+# a wrapper in your ~/bin or ~/.local/bin called 'tmux' that looks like:
+# #!/bin/sh
+# exec /path/to/the/real/tmux -f ~/.tmux.conf "$@"
+
+# Bail out if we don't have a TTY.
+if [ ! -t 0 ] || [ ! -t 1 ]; then
+    echo "No TTY available! Please add the -t option to ssh like this:" >&2
+    echo "    ssh $(hostname -f) -t mux $1" >&2
+    exit 1
+fi
+
+# Don't pass on random, incompatible locale settings from your OS via SSH.
+# You can set an explicit locale in your ~/.zshrc later if you want.
+unset LANG LANGUAGE
+export LC_ALL="C.UTF-8"
+
+# This will be changed to tmux-256color in tmux but let tmux itself know that
+# it isn't restricted to vt100 or whatever the remote system may have tried
+# to force upon you. xterm-256color is usually available even in the most
+# restricted VPS boxes.
+#
+# Don't use anything other than tmux-256color inside tmux!
+# If it isn't available in the remote system you may have to install it
+# yourself for your user (ask your AI chatbot how), or try screen-256color
+# with some limitations such as quirky mouse support and lack of truecolor.
+if ! (echo $TERM | grep -q 256); then
+export TERM=tmux-256color
+fi
+
+# A bug in the standard zsh startup scripts breaks some escape sequences for
+# tmux if $EDITOR matches *vim* during startup inside tmux.
+# $EDITOR will be set to "vim" later. You can change it in your ~/.zshrc
+#
+# Ensure that this is also in your ~/.zshenv or $ZDOTDIR/.zshenv if you are
+# using this script with your own zsh dotfiles instead of mine.
+unset EDITOR VISUAL
+
+# If you installed zsh and/or tmux outside of the default system paths,
+# use that one instead. Don't worry, $PATH is deduplicated later.
+# Add the $PATH in your standard shell's startup scripts if it's elsewhere.
+OUR_PATH="$(dirname "$(realpath "$0")")" # The directory of this script
+OUR_PATH="$OUR_PATH:$HOME/bin:$HOME/.local/bin"
+OUR_PATH="$OUR_PATH:/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin"
+OUR_PATH="$OUR_PATH:/usr/local/bin:/snap/bin"
+export PATH="$OUR_PATH:$PATH"
+
+ZSH="$(command -v zsh 2>/dev/null)"
+if [ -n "$ZSH" ]; then
+    export SHELL="$ZSH"
+else
+    echo "No zsh found. Please install it!" >&2
+    # We'll continue with the default shell.
+fi
+
+TMUX="$(command -v tmux 2>/dev/null)"
+if [ -n "$TMUX" ]; then
+    # We must start it this way, because the create-if-not-exists version adds
+    # a -0 suffix to the session name.
+    SESSION="${1:-main}"
+    tmux has-session -t "$SESSION" 2>/dev/null || tmux new-session -d -s "$SESSION"
+    exec tmux attach-session -t "$SESSION"
+else
+    echo "No tmux found. Please install it!" >&2
+    # Start the default shell instead of tmux.
+    exec "${SHELL:-/bin/sh}"
+fi
+
