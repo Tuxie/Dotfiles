@@ -1,29 +1,17 @@
 #!/usr/bin/env zsh
 #
-# Send stdin to the terminal's clipboard, if it has OCS 52 support.
+# Send stdin to the terminal's clipboard using OCS 52.
 
 print_usage() {
-    echo "Send stdin to the terminal's clipboard" >&2
-    echo "Usage: echo text | ${0:t} [-n]" >&2
+    echo "Send stdin or a file to the terminal's clipboard" >&2
+    echo "Usage: echo text | pbcopy [-n]" >&2
+    echo "  Alt: pbcopy [-n] filename.txt" >&2
     echo "  -n    Strip whitespace" >&2
     exit 1
 }
 
 ocs52_send() {
-    if [[ -t 1 && "$TERM" != dumb ]]; then
-        printf "\033]52;c;%s\007" "$(base64 | tr -d '\n')"
-    else
-        echo "Warning: Terminal may not support OSC 52 clipboard" >&2
-    fi
-}
-
-send_to_clipboard() {
-    if [[ $OSTYPE == darwin* ]]; then
-        shift
-        exec /usr/bin/pbcopy "$@"
-    else
-        ocs52_send
-    fi
+    printf "\033]52;c;%s\007" "$(base64 | tr -d '\n')"
 }
 
 strip_whitespace() {
@@ -35,8 +23,12 @@ strip_whitespace() {
     fi
 }
 
+input() {
+    [[ $# -eq 1 && -f $1 ]] && cat "$1" || cat
+}
+
 case $1 in
     -h) print_usage ;;
-    -n) strip_whitespace | send_to_clipboard "$@" ;;
-    *)  send_to_clipboard "$@"
+    -n) strip; input | strip_whitespace | ocs52_send "$@" ;;
+    *)  input | ocs52_send "$@"
 esac
