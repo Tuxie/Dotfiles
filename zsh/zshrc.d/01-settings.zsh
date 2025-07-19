@@ -7,11 +7,6 @@ setopt CASE_GLOB       # Make glob patterns case sensitive
 setopt CASE_MATCH      # Make regular expresions case sensitive
 setopt GLOB_STAR_SHORT # Make **.c equivalent to **/*.c
 
-# Load a color theme
-if (( $+commands[vivid] )); then
-    export LS_COLORS="$(vivid generate iceberg-dark)"
-fi
-
 # Don't share history between hosts
 HISTSIZE=1000000
 SAVEHIST=$HISTSIZE
@@ -25,4 +20,3 @@ setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a d
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
 setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-

@@ -1,3 +1,8 @@
+# Load a color theme
+if (( $+commands[vivid] )); then
+    export LS_COLORS="$(vivid generate iceberg-dark)"
+fi
+
 # grc adds colors to many common tools
 if [[ -f /opt/homebrew/etc/grc.zsh ]]; then
     source /opt/homebrew/etc/grc.zsh
@@ -7,8 +12,13 @@ elif [[ -f /home/linuxbrew/.linuxbrew/etc/grc.zsh ]]; then
     source /home/linuxbrew/.linuxbrew/etc/grc.zsh
 fi
 
+(( $+functions[ls] )) && unfunction ls
 if [[ $OSTYPE == linux-gnu ]]; then
     alias ls='ls --color=auto'
+elif (( $+commands[gls] )); then
+    alias ls='gls --color=auto'
+else
+    alias ls='ls -G'
 fi
 
 export CLICOLORS=1
@@ -26,4 +36,4 @@ elif (( $+commands[batcat] && ! $+commands[bat] )); then
   alias bat='command batcat --color=always'
   alias batcat='command batcat --color=auto'
 fi
-alias bore='command bat --paging=auto'
+alias bore='bat --paging=auto'

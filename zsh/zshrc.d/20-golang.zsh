@@ -1,1 +1,4 @@
-path=("$HOME/go/bin" $path)
+export GOPATH="$HOME/.go"
+export GOBIN="$GOPATH/bin"
+
+path=("$GOBIN" $path)

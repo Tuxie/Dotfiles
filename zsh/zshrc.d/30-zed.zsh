@@ -1,9 +1,10 @@
 # Some distros install the cli tool as zed, others as zeditor
+# Make both work.
 
 if (( $+commands[zeditor] )) && (( ! $+commands[zed] )); then
-    alias zed=zeditor
+    alias zed='zeditor'
 elif (( $+commands[zed] )) && (( ! $+commands[zeditor] )); then
-    alias zeditor=zed
+    alias zeditor='zed'
 fi
 
 if [[ -n $TLSESSIONDATA ]]; then
