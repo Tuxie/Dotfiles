@@ -1,0 +1,90 @@
+#!/bin/zsh
+
+# Called from tmux.conf like:
+# set-hook -g session-created 'run-shell "tmux-hook session-created #S"'
+
+# Will change iTerm2's profile to one matching the tmux session name,
+# if one exists.
+
+# I spend too much time trying to get it2profile to work bi-directionally
+# from within a tmux hook, but eventually I had to give up.
+# Firing off it2profile's fd 9 output to tmux's raw tty works reliably for
+# setting a profile, but I was unable to make it read the current one.
+#
+# That's why I need to hardcode a list of profiles that I "know" will exist.
+# I can't check if setting it worked to set a fallback if it didn't.
+#
+# If the session name is one of these, iTerm will switch to a profile with
+# the same name, otherwise reset to its initial profile.
+supported_profiles=(
+    main
+    staging
+    production
+    sandbox
+    dev
+    personal
+)
+
+# Get session variable
+get_var() {
+    local varname="$1"
+    tmux show-option -gqv "@${varname}"
+}
+
+# Set session variable
+set_var() {
+    local varname="$1"
+    local value="$2"
+    tmux set-option -gq "@${varname}" "${value}"
+}
+
+# Wrap it2profile into a version that works from within tmux hooks, and is a
+# silent no-op when we're not in iTerm2 or can't find the command.
+it2profile() {
+    if [[ $ITERM_SESSION_ID ]] && (( $+commands[it2profile] )); then
+        # We must bypass tmux and write directly to the underlying tty
+        [[ ! $tmux_tty ]] && tmux_tty="$(tmux display -p "#{pane_tty}")"
+        # it2profile writes to fd 9 instead of stdout...
+        command it2profile "$@" 9>"$tmux_tty"
+    fi
+}
+
+set_iterm2_profile() {
+    if (( ${supported_profiles[(Ie)$1]} )); then
+        it2profile -s "$1"
+    else
+        it2profile -r
+    fi
+}
+
+reset_iterm2_profile() {
+    it2profile -r
+}
+
+
+__client_session_changed() {
+    set_iterm2_profile "$1"
+}
+
+__client_attached() {
+    set_iterm2_profile "$1"
+}
+
+__client_detached() {
+    reset_iterm2_profile
+}
+
+__session_created() {
+}
+
+__session_closed() {
+    reset_iterm2_profile
+}
+
+
+# Run the function if it exists
+hook="$1"; shift
+hookfunction="__${hook//-/_}"
+if (( $+functions[$hookfunction] )); then
+    $hookfunction "$@"
+fi

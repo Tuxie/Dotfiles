@@ -19,10 +19,16 @@ path=(
     /home/linuxbrew/.linuxbrew/bin
     /home/linuxbrew/.linuxbrew/opt/ruby/bin
     /usr/local/bin
+    /snap/bin
     $path
 )
 
-recommended=(
+# I will be a bit opinionated about required tools for now. While most scripts
+# verify the existence of things they use and skip silently if they aren't
+# installed, there may be a few things left in a broken state if they aren't
+# and it's low on my priority list to fix it. Just install the dependencies
+# even if you don't need them, ok? Or send patches.
+required=(
     git
     fzf
     tmux
@@ -35,6 +41,7 @@ recommended=(
     nvim:neovim
     grc
     pspg
+    vifm
 )
 
 if [[ $OSTYPE == darwin* ]]; then
@@ -42,10 +49,11 @@ if [[ $OSTYPE == darwin* ]]; then
         print "Homebrew is required on macOS! Please install it: https://brew.sh"
         exit 1
     fi
+    required+=(gls:coreutils)
 fi
 
 missing=()
-for tool in "${recommended[@]}"
+for tool in "${required[@]}"
 do
     if (( ! $+commands[${tool%%:*}] )); then
         missing+=(${tool#*:})
@@ -109,6 +117,7 @@ configs=(
     .config/nvim
     .config/zed
     .config/procps
+    .config/vifm
     .config/btop
     .tmux.conf
     .psqlrc

@@ -7,10 +7,11 @@
 #   ssh hostname -t mux devstuff   # Attach to the 'devstuff' session
 #
 # If you are using my dotfiles, prefix is set to Ctrl-s, as in SSH or Server.
-# Ctrl-s Ctrl-a to select session.
-# Ctrl-s Shift-A to add a new session and give it a name.
-# Ctrl-s Ctrl-s to send a literal Ctrl-s.
-# Ctrl-s d to detach/disconnect.
+#   Ctrl-s s         Select a Session
+#   Ctrl-s Shift-S   Create a new Session and give it a name
+#   Ctrl-s Ctrl-s    Switch back and forth between the last two active sessions
+#   Ctrl-s d         Detach/Disconnect
+#   Ctrl-s Option-s  Send an actual Ctrl-s
 # See tmux.conf and the tmux documentation for more commands.
 #
 # Make sure that your remote user's default shell can find this mux script
@@ -37,19 +38,6 @@ fi
 unset LANG LANGUAGE
 export LC_ALL="C.UTF-8"
 
-# This will be changed to tmux-256color in tmux but let tmux itself know that
-# it isn't restricted to vt100 or whatever the remote system may have tried
-# to force upon you. xterm-256color is usually available even in the most
-# restricted VPS boxes.
-#
-# Don't use anything other than tmux-256color inside tmux!
-# If it isn't available in the remote system you may have to install it
-# yourself for your user (ask your AI chatbot how), or try screen-256color
-# with some limitations such as quirky mouse support and lack of truecolor.
-if ! (echo $TERM | grep -q 256); then
-export TERM=tmux-256color
-fi
-
 # A bug in the standard zsh startup scripts breaks some escape sequences for
 # tmux if $EDITOR matches *vim* during startup inside tmux.
 # $EDITOR will be set to "vim" later. You can change it in your ~/.zshrc
@@ -59,32 +47,28 @@ fi
 unset EDITOR VISUAL
 
 # If you installed zsh and/or tmux outside of the default system paths,
-# use that one instead. Don't worry, $PATH is deduplicated later.
+# use that one instead. Don't worry, $PATH is cleaned up later.
 # Add the $PATH in your standard shell's startup scripts if it's elsewhere.
-OUR_PATH="$(dirname "$(realpath "$0")")" # The directory of this script
-OUR_PATH="$OUR_PATH:$HOME/bin:$HOME/.local/bin"
+OUR_PATH="$HOME/bin:$HOME/.local/bin"
 OUR_PATH="$OUR_PATH:/opt/homebrew/bin:/home/linuxbrew/.linuxbrew/bin"
 OUR_PATH="$OUR_PATH:/usr/local/bin:/snap/bin"
 export PATH="$OUR_PATH:$PATH"
 
-ZSH="$(command -v zsh 2>/dev/null)"
-if [ -n "$ZSH" ]; then
-    export SHELL="$ZSH"
+zsh="$(command -v zsh 2>/dev/null)"
+if [ -n "$zsh" ]; then
+    export SHELL="$zsh"
 else
     echo "No zsh found. Please install it!" >&2
     # We'll continue with the default shell.
 fi
 
-TMUX="$(command -v tmux 2>/dev/null)"
-if [ -n "$TMUX" ]; then
-    # We must start it this way, because the create-if-not-exists version adds
-    # a -0 suffix to the session name.
+tmux="$(command -v tmux 2>/dev/null)"
+if [ -n "$tmux" ]; then
     SESSION="${1:-main}"
-    tmux has-session -t "$SESSION" 2>/dev/null || tmux new-session -d -s "$SESSION"
-    exec tmux attach-session -t "$SESSION"
+    $tmux has-session -t "$SESSION" 2>/dev/null || $tmux new-session -d -s "$SESSION"
+    exec $tmux attach-session -t "$SESSION"
 else
     echo "No tmux found. Please install it!" >&2
     # Start the default shell instead of tmux.
     exec "${SHELL:-/bin/sh}"
 fi
-
