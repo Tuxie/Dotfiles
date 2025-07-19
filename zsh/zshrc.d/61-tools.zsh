@@ -2,10 +2,6 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 
-if (( $+commands[nvim] )); then
-    alias vim='nvim'
-fi
-
 # Instead of checking the terminal's capabilities like sane programs,
 # Viuer, which is used by spotify_player, checks for a hardcoded set of $TERM
 # values or if $TERM_PROGRAM is "MacTerm" to determine if it supports

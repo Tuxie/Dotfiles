@@ -19,3 +19,16 @@ set expandtab       " Use spaces instead of actual tab characters
 syntax enable
 colorscheme habamax
 hi! Normal ctermbg=NONE guibg=NONE
+
+" Map the old bindings that we are overwriting to something else
+nnoremap gK K   " gK to show the Manual for the thing under the cursor
+nnoremap gJ J   " gJ to Join lines
+xnoremap gJ J
+
+" Make Shift-J/K scroll a page down/up, like Ctrl-d/u or PgDn/PgUp, but
+" keep H/L at go to top/bottom of the screen to avoid surprises
+nnoremap J <C-d>  " J to scroll down
+xnoremap J <C-d>
+nnoremap K <C-u>  " K to scroll up
+xnoremap K <C-u>
+
