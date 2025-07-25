@@ -128,6 +128,7 @@ for file in "${configs[@]}"
 do
     source="${DOTFILES}/${file#.}"
     target="${HOME}/${file}"
+    current="$(readlink "$target")"
     if [[ -d $target ]]; then
         files=($target/*(N))
         if (( $#files == 0 )); then
@@ -140,9 +141,10 @@ do
     elif [[ $source -ef $target ]]; then
         # $target is already a link to $source. Skipping silently.
     else
-        if [[ -L $target && ! $source -ef $target ]]; then
-            print "~/$file is already linked to something else. Skipping."
-            continue
+        if [[ -L $target && ! $source -ef $current ]]; then
+            # print "~/$file is already linked to something else. Skipping."
+            print "~/$file is already linked to something else: ${current}. Overwriting."
+            rm "$target" # FIXME: Only if --force
         else
             print "Removing stale ~/$file symlink"
             rm "$target"

@@ -10,6 +10,25 @@ print_usage() {
     exit 1
 }
 
+perl -e 'print "\ePtmux;\e\ePtmux;\e\e\e\e]1337;Copy=:VGlzIDIyIEp1bCAyMDI1IDE0OjE2OjM0IENFU1Q=\a\e\e\\\e\\"'
+printf '\033Ptmux;\033\033Ptmux;\033\033\033\033]1337;Copy=:VGlzIDIyIEp1bCAyMDI1IDE0OjE2OjM0IENFU1Q=\a\033\033\\\033\\'
+
+
+if [[ $SINGLE_TMUX ]]; then
+    printf '\ePtmux;\e\e]'
+    print_osc_sequence
+    printf '\a\e\\'
+elif [[ $NESTED_TMUX ]]; then
+    printf '\ePtmux;\e\ePtmux;\e\e\e\e]'
+    print_osc_sequence
+    printf '\a\e\e\\\e\\'
+elif [[ $DOUBLE_NESTED_TMUX ]]; then
+    printf '\ePtmux;\e\ePtmux;\e\e\e\ePtmux;\e\e\e\e\e\e\e\e]'
+    print_osc_sequence
+    printf '\a\e\e\e\e\e\e\\\e\e\\\e\\'
+fi
+
+
 ocs52_send() {
     printf "\033]52;c;%s\007" "$(base64 | tr -d '\n')"
 }
@@ -32,3 +51,6 @@ case $1 in
     -n) strip; input | strip_whitespace | ocs52_send "$@" ;;
     *)  input | ocs52_send "$@"
 esac
+
+^[Ptmux;^[^[Ptmux;^[^[^[^[]1337;Copy=:VGlzIDIyIEp1bCAyMDI1IDE0OjE2OjM0IENFU1Q=^G^[^[\e\%
+^[Ptmux;^[^[Ptmux;^[^[^[^[]1337;Copy=:VGlzIDIyIEp1bCAyMDI1IDE0OjE2OjM0IENFU1Q=^G^[^[\^[\%

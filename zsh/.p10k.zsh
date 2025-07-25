@@ -350,7 +350,7 @@
 
   #####################################[ vcs: git status ]######################################
   # Branch icon. Set this parameter to '\UE0A0 ' for the popular Powerline branch icon.
-  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 '
+  # typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 '
 
   # Untracked files icon. It's really a question mark, your font isn't broken.
   # Change the value of this parameter to show a different icon.
@@ -1731,10 +1731,13 @@ typeset -g POWERLEVEL9K_CONFIG_FILE=${${(%):-%x}:a}
 ### Per Wigren's custom settings below ###
 
 function prompt_aws_vault() {
-  [[ -n "$AWS_VAULT" ]] || return
-  # p10k segment -f 172 -i '🔐' -t "${AWS_VAULT#gluepay-}"
-  # p10k segment -f 172 -i '' -t "$AWS_VAULT"
-  p10k segment -f 172 -i ' ' -t "${AWS_VAULT#gluepay-}"
+  [[ ! $AWS_VAULT ]] && return
+  case "$AWS_VAULT" in
+    *prod*)    p10k segment -f 196 -i ' ' -t "$AWS_VAULT" ;;
+    *staging*) p10k segment -f 172 -i ' ' -t "$AWS_VAULT" ;;
+    *sandbox*) p10k segment -f 203 -i ' ' -t "$AWS_VAULT" ;;
+    *)         p10k segment -f 181 -i ' ' -t "$AWS_VAULT" ;;
+  esac
 }
 
 typeset -g POWERLEVEL9K_VCS_GIT_GITHUB_ICON='' # cod-inverted

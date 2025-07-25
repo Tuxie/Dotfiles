@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+echo "$@" >> /tmp/debug.txt
+
 # Called from tmux.conf like:
 # set-hook -g session-created 'run-shell "tmux-hook session-created #S"'
 

@@ -4,4 +4,6 @@ source $ZDOTDIR/addons/ez-compinit/ez-compinit.plugin.zsh
 zstyle ':completion:*' menu select
 
 # Enable colors
+(( $+commands[gdircolors] )) && source <(gdircolors)
+
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
